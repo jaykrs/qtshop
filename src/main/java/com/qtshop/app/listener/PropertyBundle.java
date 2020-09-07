@@ -18,6 +18,8 @@ import org.springframework.stereotype.Repository;
 
 import com.qtshop.app.entity.LookUp;
 import com.qtshop.app.entity.LookUpType;
+import com.qtshop.app.repository.LookUpRepository;
+import com.qtshop.app.repository.LookUpTypeRepository;
 
 
 @Repository
@@ -28,18 +30,32 @@ public class PropertyBundle {
 	
 	public static Map<String, List<LookUp>> adminSystemMap = new HashMap<String, List<LookUp>>();
 
-	@PersistenceContext
-	EntityManagerFactory entityManagerFactory;
+	@Autowired
+	LookUpRepository lookUpRepository;
 
 	@Autowired
 	MongoTemplate mongoTemplate;
 	
+	@Autowired
+	LookUpTypeRepository lookUpTypeRepository;
+	
 	@EventListener(ApplicationReadyEvent.class)
 	public void initilizeProperty() {
-		
 		List<LookUpType> lookupTypeList = mongoTemplate.findAll(LookUpType.class);
-
-		System.out.println(lookupTypeList.size());
+		/*
+		 * LookUpType lkt = new LookUpType(); lkt.setLookUpTypeName("CUSTOMER_TYPE");
+		 * lkt.setLookUpTypeLabel("CUSTOMER TYPE"); mongoTemplate.save(lkt);
+		 * 
+		 * List<LookUpType> lookupTypeList = mongoTemplate.findAll(LookUpType.class);
+		 
+		  LookUp lk = new LookUp(); lk.setLookUpName("DEBIT_CARD");
+		  lk.setLookUpLabel("DEBIT_CARD"); lk.setActive(Boolean.TRUE);
+		  lk.setDeleted(Boolean.FALSE);
+		  lk.setLookUpTypeId(lookupTypeList.get(0).getLookUpTypeId());
+		  mongoTemplate.save(lk);
+		 */
+		
+//		System.out.println(lookupTypeList.get(2).getLookUpTypeId());
 		for (LookUpType lut : lookupTypeList) {
 			Query query = new Query();
 			query.addCriteria(Criteria.where("lookUpTypeId").is(lut.getLookUpTypeId()));

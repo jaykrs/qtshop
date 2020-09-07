@@ -1,6 +1,7 @@
 package com.qtshop.app.entity;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -15,7 +16,7 @@ public class LookUpType implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int lookUpTypeId;
+	private BigInteger lookUpTypeId;
 	
 	private String lookUpTypeName;
 	
@@ -24,14 +25,14 @@ public class LookUpType implements Serializable{
 	/**
 	 * @return the lookUpTypeId
 	 */
-	public int getLookUpTypeId() {
+	public BigInteger getLookUpTypeId() {
 		return lookUpTypeId;
 	}
 
 	/**
 	 * @param lookUpTypeId the lookUpTypeId to set
 	 */
-	public void setLookUpTypeId(int lookUpTypeId) {
+	public void setLookUpTypeId(BigInteger lookUpTypeId) {
 		this.lookUpTypeId = lookUpTypeId;
 	}
 
@@ -62,4 +63,5 @@ public class LookUpType implements Serializable{
 	public void setLookUpTypeLabel(String lookUpTypeLabel) {
 		this.lookUpTypeLabel = lookUpTypeLabel;
 	}
+
 }

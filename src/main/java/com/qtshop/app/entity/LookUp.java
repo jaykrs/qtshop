@@ -1,5 +1,7 @@
 package com.qtshop.app.entity;
 
+import java.math.BigInteger;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -7,13 +9,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class LookUp {
 
 	@Id
-	private int lookUpId;
+	private BigInteger lookUpId;
 	
 	private String lookUpName;
 	
 	private String lookUpLabel;
 	
-	private int lookUpTypeId;
+	private BigInteger lookUpTypeId;
 
 	private boolean isActive;
 	
@@ -21,14 +23,14 @@ public class LookUp {
 	/**
 	 * @return the lookUpId
 	 */
-	public int getLookUpId() {
+	public BigInteger getLookUpId() {
 		return lookUpId;
 	}
 
 	/**
 	 * @param lookUpId the lookUpId to set
 	 */
-	public void setLookUpId(int lookUpId) {
+	public void setLookUpId(BigInteger lookUpId) {
 		this.lookUpId = lookUpId;
 	}
 
@@ -63,14 +65,14 @@ public class LookUp {
 	/**
 	 * @return the lookUpTypeId
 	 */
-	public int getLookUpTypeId() {
+	public BigInteger getLookUpTypeId() {
 		return lookUpTypeId;
 	}
 
 	/**
 	 * @param lookUpTypeId the lookUpTypeId to set
 	 */
-	public void setLookUpTypeId(int lookUpTypeId) {
+	public void setLookUpTypeId(BigInteger lookUpTypeId) {
 		this.lookUpTypeId = lookUpTypeId;
 	}
 
