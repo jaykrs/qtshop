@@ -6,6 +6,8 @@ import java.util.Date;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author jayant
  *
@@ -45,6 +47,7 @@ public class Users implements Serializable {
 	
 	private Boolean isActive;
 	
+	@JsonIgnore
 	private String pwd;
 	
 	
@@ -81,6 +84,10 @@ public class Users implements Serializable {
 	private Date validationDate;
 	
 	private String activationCode;
+	
+	private String userType;
+	@JsonIgnore
+	private String adminPass;
 	
 	public String  getId() {
 		return id;
@@ -348,6 +355,34 @@ public class Users implements Serializable {
 	 */
 	public void setValidationDate(Date validationDate) {
 		this.validationDate = validationDate;
+	}
+
+	/**
+	 * @return the userType
+	 */
+	public String getUserType() {
+		return userType;
+	}
+
+	/**
+	 * @param userType the userType to set
+	 */
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+
+	/**
+	 * @return the adminPwd
+	 */
+	public String getAdminPwd() {
+		return adminPass;
+	}
+
+	/**
+	 * @param adminPwd the adminPwd to set
+	 */
+	public void setAdminPass(String adminPass) {
+		this.adminPass = adminPass;
 	}
 
 	/*
