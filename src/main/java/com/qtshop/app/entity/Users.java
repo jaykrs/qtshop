@@ -47,7 +47,6 @@ public class Users implements Serializable {
 	
 	private Boolean isActive;
 	
-	@JsonIgnore
 	private String pwd;
 	
 	
@@ -86,7 +85,7 @@ public class Users implements Serializable {
 	private String activationCode;
 	
 	private String userType;
-	@JsonIgnore
+	
 	private String adminPass;
 	
 	public String  getId() {

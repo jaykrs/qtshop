@@ -1,11 +1,11 @@
 package com.qtshop.app.controller;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.qtshop.app.config.JwtTokenUtil;
 import com.qtshop.app.entity.Users;
+import com.qtshop.app.factory.IUserService;
 import com.qtshop.app.model.JwtRequest;
 import com.qtshop.app.model.JwtResponse;
 import com.qtshop.app.service.JwtUserDetailsService;
@@ -35,6 +36,9 @@ public class JwtAuthenticationController {
 	private JwtUserDetailsService userDetailsService;
 
 	@Autowired
+	IUserService userService;
+	
+	@Autowired
 	MongoTemplate mongoTemplate;
 	
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
@@ -42,7 +46,10 @@ public class JwtAuthenticationController {
 		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 		final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 		final String token = jwtTokenUtil.generateToken(userDetails);
-		return ResponseEntity.ok(new JwtResponse(token));
+		Map<String, Object> userResponse = new HashMap<String, Object>();
+		userResponse.put("jwt", new JwtResponse(token));
+		userResponse.put("user", userService.getUserByEmail(userDetails.getUsername()));
+		return ResponseEntity.ok(userResponse);
 	}
 
 	private void authenticate(String username, String password) throws Exception {
@@ -57,9 +64,7 @@ public class JwtAuthenticationController {
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public ResponseEntity<?> saveUser(@RequestBody Users user) throws Exception {
-		Query query = new Query();
-		query.addCriteria(Criteria.where("emailId").is(user.getEmailId()));
-		Users _user = mongoTemplate.findOne(query, Users.class);
+		Users _user = userService.getUserByEmail(user.getEmailId()) ;
 		if (null != _user)
 			return ResponseEntity.of(Optional.empty());
 		else
