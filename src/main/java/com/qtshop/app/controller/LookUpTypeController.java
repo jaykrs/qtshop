@@ -6,16 +6,21 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.qtshop.app.entity.LookUp;
 import com.qtshop.app.entity.LookUpType;
 import com.qtshop.app.repository.LookUpTypeRepository;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/lookuptype")
 public class LookUpTypeController {
 	
@@ -24,9 +29,9 @@ public class LookUpTypeController {
 	private LookUpTypeRepository lRepository;
 	
 	@RequestMapping(value = "/getall", method = RequestMethod.GET)
-	public List<LookUpType> getAllLookUpType() {
+	public ResponseEntity<List<LookUpType>> getAllLookUpType() {
 		LOG.info("Getting all LookupType.");
-		return lRepository.findAll();
+		return new ResponseEntity<List<LookUpType>>(lRepository.findAll(),HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/{lookuptypeId}", method = RequestMethod.GET)
